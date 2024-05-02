@@ -1,0 +1,95 @@
+---
+title: "Homicidios cometidos en Costa Rica en 2023"
+author: "Carolina Domian"
+lang: es
+date: 2024-05-02
+format: 
+  html:
+    toc: true
+    theme: cerulean
+editor: visual
+---
+
+# Presentación
+Este documento contiene un conjunto de gráficos sobre homicidios cometidos en Costa Rica en 2023.
+
+# Lectura de datos 
+
+```{r}
+#| label: lectura-datos
+
+delitos_2023 <- read.csv("estadisticaspoliciales2023.csv")
+```
+
+# Filtrado de homicidios
+
+```{r}
+#| label: filtrado-homicidios
+
+homicidios2023 <- 
+  delitos_2023[delitos_2023$Delito == "HOMICIDIO", ]
+```
+
+# Homicidios por provincia 
+
+```{r}
+#| label: homicidios_x_provincia
+
+# Conteo de homicidios por provincia
+homicidios_x_provincia <- table(homicidios2023$Provincia)
+
+# Ordenamiento cantidad de homicidios
+homicidios_x_provincia <- sort(homicidios_x_provincia, decreasing = TRUE)
+
+
+barplot(height = homicidios_x_provincia,
+        las = 2,
+        col = "red",
+        cex.names = 0.8, 
+        main = "Homicidios por provincia 2023"
+        )
+```
+
+# Homicidios por cantón 2023
+```{r}
+#| label: homicidios_x_canton
+
+# Conteo de homicidios por canton
+homicidios_x_canton <- table(homicidios2023$Canton)
+
+# Ordenamiento cantidad de homicidios
+homicidios_x_canton <- sort(homicidios_x_canton, decreasing = TRUE)
+
+
+# Selección de los 20 cantones con más homicidios 
+homicidios_x_canton <- head(homicidios_x_canton, 20)
+
+barplot(height = homicidios_x_canton,
+        las = 2,
+        col = "blue",
+        cex.names = 0.6, 
+        main = "Homicidios por cantón 2023"
+        )
+```
+
+
+
+# Homicidios por sexo 2023
+
+```{r}
+#| label: homicidios_x_sexo
+
+# Conteo de homicidios por canton
+homicidios_x_sexo <- table(homicidios2023$Genero)
+
+# Ordenamiento cantidad de homicidios
+homicidios_x_sexo <- sort(homicidios_x_sexo, decreasing = TRUE)
+
+
+barplot(height = homicidios_x_sexo,
+        las = 2,
+        col = "blue",
+        cex.names = 0.6, 
+        main = "Homicidios por cantón 2023"
+        )
+```
